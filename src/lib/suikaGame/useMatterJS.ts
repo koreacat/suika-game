@@ -1,39 +1,39 @@
 import Matter from 'matter-js';
 import {useEffect} from "react";
-import wall from "./object/Wall";
+import Wall from "./object/Wall";
+import {Fruit, FruitType, getFruit} from "./object/Fruit";
+import {RENDER_HEIGHT, RENDER_WIDTH} from "./object/Size";
 
-// 체리, 딸기, 포도, 오렌지, 감, 사과, 배, 복숭아, 파인애플, 멜론, 수박
-const { Engine, Render, Bodies, World, Mouse, MouseConstraint } = Matter;
-let engine: any, render: any, canvas: any = null;
+const {Engine, Render, World, Mouse, MouseConstraint} = Matter;
+const engine = Engine.create();
+let render: Matter.Render | null = null;
+
+const renderOptions = {
+  width: RENDER_WIDTH,
+  height: RENDER_HEIGHT,
+  wireframes: false
+}
 
 const init = () => {
-  canvas = document.getElementById('canvas');
-  while (canvas.hasChildNodes()) canvas.removeChild(canvas.firstChild);
-  engine = Engine.create();
-  render = Render.create({element: canvas, engine: engine, options: {
-      width: 300,
-      height: 500,
-      wireframes: false
-    }
-  });
-  World.add(engine.world, [...wall]);
+  const canvas = document.getElementById('canvas');
+  if (!canvas) return;
+  while (canvas.hasChildNodes() && canvas.firstChild) canvas.removeChild(canvas.firstChild);
+  render = Render.create({element: canvas, engine: engine, options: renderOptions});
+  World.add(engine.world, [...Wall]);
 };
 
 const draw = () => {
-  const options = () => {
-    return {
-      restitution: 0,
-      render: {
-        fillStyle: `RGB(255, 255, 255)`,
-      }
-    }
-  };
+  World.add(engine.world, [getFruit(Fruit.CHERRY)]);
+  return;
 
-  const circle = Bodies.circle(100, 30, 25, options());
-  World.add(engine.world, [circle]);
+  Object.values(Fruit).forEach((fruit: FruitType) => {
+    World.add(engine.world, [getFruit(fruit)]);
+  });
 };
 
 const event = () => {
+  if (!render) return;
+
   const getOptions = (): any => {
     return {
       mouse: mouse,
@@ -49,10 +49,11 @@ const event = () => {
   const mouse = Mouse.create(render.canvas);
   const mouseConstraint = MouseConstraint.create(engine, getOptions());
   World.add(engine.world, mouseConstraint);
-  render.mouse = mouse;
+  Object.assign(mouse)
 };
 
 const run = () => {
+  if (!render) return;
   Engine.run(engine);
   Render.run(render);
 };
