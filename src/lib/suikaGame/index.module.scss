@@ -1,19 +1,85 @@
-.area {
+.gameArea {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   height: 100%;
-  background: #000000;
 
-  .wrap {
+  .gameWrap {
+    position: relative;
+    top: 0;
     display: flex;
-    position: absolute;
-    width: 100%;
-    height: 100%;
     justify-content: center;
     align-items: center;
     align-content: center;
     flex-wrap: wrap;
     flex-direction: column;
+  }
+
+  .bestScoreArea {
+    position: absolute;
     top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    transform: translate(0, -100%);
+
+    .best {
+      display: flex;
+      flex-direction: column;
+      margin-top: 8px;
+      color: #fff;
+
+      .text {
+        font-family: 'Comic Sans MS', 'Pretendard'; 
+        font-size: 12px;
+      }
+
+      .number {
+        font-family: 'Pacifico', 'Pretendard'; 
+        font-size: 24px;
+      }
+    }
+  }
+
+  .scoreArea {
+    position: absolute;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    transform: translate(0, -100%);
+
+    .score {
+      font-family: 'Pacifico', 'Pretendard'; 
+      font-size: 64px;
+      color: #fff;
+    }
+  }
+
+  .nextArea {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    transform: translate(0, -100%);
+
+    .next {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+    }
+  }
+
+  .canvas {
     overflow: hidden;
+    margin-top: 16px;
+    border: 16px solid #E0C889;
+    border-radius: 34px;
   }
 }
