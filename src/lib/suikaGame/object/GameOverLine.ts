@@ -4,7 +4,7 @@ const LINE_WIDTH = RENDER_WIDTH * 10;
 const LINE_HEIGHT = 8;
 export const GameOverLine = Matter.Bodies.rectangle(
     RENDER_WIDTH / 2,
-    RENDER_HEIGHT / 6.5,
+    RENDER_HEIGHT / 6.5 - 30,
     LINE_WIDTH,
     LINE_HEIGHT,
     {

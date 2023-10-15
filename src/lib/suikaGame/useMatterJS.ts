@@ -3,21 +3,22 @@ import { SetStateAction, useEffect } from "react";
 import Wall from "./object/Wall";
 import { Fruit, getFruitFeature, getNextFruitFeature, getRandomFruitFeature } from "./object/Fruit";
 import { RENDER_HEIGHT, RENDER_WIDTH } from "./object/Size";
-import {GameOverLine, GameOverGuideLine} from './object/GameOverLine';
+import { GameOverLine, GameOverGuideLine } from './object/GameOverLine';
+import { GuideLine, GuideLineColor } from './object/GuideLine';
 
 const { Engine, Render, World, Mouse, MouseConstraint } = Matter;
-const engine = Engine.create();
 const frameInterval = 1000 / 60; // 60fps
 const getImgUrl = (fruit: Fruit) => require('../../resource/' + fruit + '.png');
 
+let engine = Engine.create();
 let render: Matter.Render | null = null;
+let requestAnimation: number | null = null;
 let lastTime = 0;
 let fixedItemTimeOut: NodeJS.Timeout | null = null;
 let fixedItem: Matter.Body | null = null; // 고정된 원
 let isDragging = false;
-let prevPosition = { x: RENDER_WIDTH / 2, y: 50};
+let prevPosition = { x: RENDER_WIDTH / 2, y: 50 };
 let nextFruit: Fruit | null = null;
-let isGameOver: boolean = false;
 
 const renderOptions = {
   width: RENDER_WIDTH,
@@ -34,7 +35,7 @@ const init = (props: UseMatterJSProps) => {
   engine.world.gravity.y = 2.0;
   render = Render.create({ element: canvas, engine: engine, options: renderOptions });
   World.add(engine.world, [...Wall]);
-  World.add(engine.world, [GameOverLine, GameOverGuideLine]);
+  World.add(engine.world, [GameOverLine, GameOverGuideLine, GuideLine]);
   nextFruit = props.nextItem;
   createFixedItem(props);
 };
@@ -43,7 +44,7 @@ const createFixedItem = ({ setNextItem }: UseMatterJSProps) => {
   if (fixedItem) return;
   if (!nextFruit) return;
   const feature = getFruitFeature(nextFruit);
-  const label  = feature?.label as Fruit;
+  const label = feature?.label as Fruit;
   const radius = feature?.radius || 1;
   fixedItem = Matter.Bodies.circle(prevPosition.x, prevPosition.y, radius, {
     isStatic: true,
@@ -65,6 +66,11 @@ const createFixedItem = ({ setNextItem }: UseMatterJSProps) => {
   setNextItem(newNextItem);
 }
 
+const handleGameOver = (props: UseMatterJSProps) => {
+  props.setIsGameOver(true);
+  requestAnimation && cancelAnimationFrame(requestAnimation);
+}
+
 const event = (props: UseMatterJSProps) => {
   if (!render) return;
 
@@ -81,9 +87,19 @@ const event = (props: UseMatterJSProps) => {
 
   // 마우스 버튼 누르면 원 이동 시작
   Matter.Events.on(mouseConstraint, 'startdrag', (event) => {
-    if (event.body === fixedItem) {
-      fixedItemTimeOut && clearTimeout(fixedItemTimeOut);
-      isDragging = true;
+    if(!fixedItem) return;
+    fixedItemTimeOut && clearTimeout(fixedItemTimeOut);
+    isDragging = true;
+
+    if (fixedItem) {
+      Matter.Body.setPosition(fixedItem, {
+        x: event.mouse.position.x,
+        y: fixedItem.position.y,
+      });
+      Matter.Body.setPosition(GuideLine, {
+        x: event.mouse.position.x,
+        y: GuideLine.position.y,
+      })
     }
   });
 
@@ -94,20 +110,20 @@ const event = (props: UseMatterJSProps) => {
         x: event.mouse.position.x,
         y: fixedItem.position.y,
       });
+      Matter.Body.setPosition(GuideLine, {
+        x: event.mouse.position.x,
+        y: GuideLine.position.y,
+      })
     }
   });
 
   // 마우스 버튼 뗄 때 원의 고정 해제
   Matter.Events.on(mouseConstraint, 'enddrag', (event) => {
-    if(event.body !== fixedItem) return;
-    
+    // 원의 고정 해제
+    if (!fixedItem) return;
     isDragging = false;
     const popSound = new Audio(require('../../resource/pop.mp3'));
     popSound.play();
-
-    // 원의 고정 해제
-    if (!fixedItem) return;
-
     const label = fixedItem?.label as Fruit;
     const feature = getFruitFeature(label);
     const radius = feature?.radius || 1;
@@ -127,12 +143,14 @@ const event = (props: UseMatterJSProps) => {
 
     prevPosition.x = fixedItem.position.x;
 
+    GuideLine.render.fillStyle = '#ffffff00';
     World.remove(engine.world, fixedItem);
     World.remove(engine.world, GameOverLine);
     fixedItem = null;
     World.add(engine.world, newItem);
 
     fixedItemTimeOut = setTimeout(() => {
+      GuideLine.render.fillStyle = GuideLineColor;
       createFixedItem(props);
       World.add(engine.world, GameOverLine);
     }, 800);
@@ -145,8 +163,8 @@ const event = (props: UseMatterJSProps) => {
       const bodyB = pair.bodyB;
 
 
-      if(bodyA.label === 'gameOverLine' || bodyB.label === 'gameOverLine') {
-        props.setIsGameOver(true);
+      if (bodyA.label === 'gameOverLine' || bodyB.label === 'gameOverLine') {
+        handleGameOver(props);
         return;
       }
 
@@ -156,8 +174,8 @@ const event = (props: UseMatterJSProps) => {
       const labelA = bodyA.label as Fruit;
       const labelB = bodyB.label as Fruit;
 
-      if(bodyA.isSensor || bodyB.isSensor) return;
-      if(labelA === Fruit.WATERMELON && labelB === Fruit.WATERMELON) return;
+      if (bodyA.isSensor || bodyB.isSensor) return;
+      if (labelA === Fruit.WATERMELON && labelB === Fruit.WATERMELON) return;
 
       // 같은 크기인 경우에만 합치기
       if (labelA === labelB) {
@@ -197,7 +215,7 @@ const event = (props: UseMatterJSProps) => {
 };
 
 const animate = (currentTime: number) => {
-  requestAnimationFrame(animate);
+  requestAnimation = requestAnimationFrame(animate);
 
   const elapsed = currentTime - lastTime;
 
@@ -214,6 +232,7 @@ const run = () => {
 };
 
 interface UseMatterJSProps {
+  score: number;
   setScore: React.Dispatch<SetStateAction<number>>;
   nextItem: Fruit;
   setNextItem: React.Dispatch<SetStateAction<Fruit>>;
@@ -228,9 +247,21 @@ const useMatterJS = (props: UseMatterJSProps) => {
     run();
 
     return (() => {
-      props.setScore(0); 
+      props.setScore(0);
     })
   }, []);
+
+  const clear = () => {
+    fixedItem = null;
+    engine = Engine.create();
+    init(props);
+    event(props);
+    run();
+  }
+
+  return {
+    clear
+  }
 };
 
 export default useMatterJS;

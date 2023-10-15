@@ -4,8 +4,8 @@
   justify-content: center;
   width: 100%;
   height: 100%;
-  background: linear-gradient(0deg, white, #C3B78A, #C5A368, #AE7B38, #BC905E);
-  
+  background: linear-gradient(0deg, #f5f1c4, #cfa76f, #a0633b);
+
   .gameWrap {
     position: relative;
     top: 0;
@@ -26,12 +26,11 @@
   align-items: end;
   justify-content: space-between;
   width: 100%;
-  padding: 0 24px;
   transform: translate(0, -100%);
+  user-select: none;
 
   .bestScoreArea {
     flex: 1;
-
     display: flex;
     flex-direction: column;
     color: #fff;
@@ -75,6 +74,7 @@
       font-size: 12px;
       font-weight: 700;
       color: #fff;
+      user-select: none;
     }
 
     .next {
@@ -92,8 +92,9 @@
 .canvas {
   overflow: hidden;
   margin: 8px 0;
-  border: 2px solid #E0C889;
+  border: 2px solid #ffffff80;
   border-radius: 16px;
+  cursor: pointer;
 }
 
 .bottomArea {
