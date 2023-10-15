@@ -1,13 +1,24 @@
 {
   "files": {
     "main.css": "./static/css/main.39f4aa22.css",
-    "main.js": "./static/js/main.f94ccda0.js",
+    "main.js": "./static/js/main.0bba4d50.js",
+    "static/media/bgm.mp3": "./static/media/bgm.3eec924b9b66a3515033.mp3",
+    "static/media/MELON.png": "./static/media/MELON.504f013ed0f60fb40f51.png",
+    "static/media/GRAPES.png": "./static/media/GRAPES.cbebe2ed45069011e3b9.png",
+    "static/media/WATERMELON.png": "./static/media/WATERMELON.eb37c65e7a0f6bf97b50.png",
+    "static/media/PINEAPPLE.png": "./static/media/PINEAPPLE.b6ba15acd107676e42c2.png",
+    "static/media/PEAR.png": "./static/media/PEAR.35b6d02798db908c4562.png",
+    "static/media/ORANGE.png": "./static/media/ORANGE.3bd088a9b17724d7820e.png",
+    "static/media/PEACH.png": "./static/media/PEACH.b36df1047098052b6c65.png",
+    "static/media/PERSIMMON.png": "./static/media/PERSIMMON.5611d4e852a7f9eabef4.png",
+    "static/media/APPLE.png": "./static/media/APPLE.635e880809a60b95bd68.png",
+    "static/media/STRAWBERRY.png": "./static/media/STRAWBERRY.a80105b7034588cd1a6a.png",
     "index.html": "./index.html",
     "main.39f4aa22.css.map": "./static/css/main.39f4aa22.css.map",
-    "main.f94ccda0.js.map": "./static/js/main.f94ccda0.js.map"
+    "main.0bba4d50.js.map": "./static/js/main.0bba4d50.js.map"
   },
   "entrypoints": [
     "static/css/main.39f4aa22.css",
-    "static/js/main.f94ccda0.js"
+    "static/js/main.0bba4d50.js"
   ]
 }
