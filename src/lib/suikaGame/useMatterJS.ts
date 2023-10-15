@@ -104,7 +104,7 @@ const event = (props: UseMatterJSProps) => {
     if(event.body !== fixedItem) return;
     
     isDragging = false;
-    const popSound = new Audio('/pop.mp3');
+    const popSound = new Audio(require('../../resource/pop.mp3'));
     popSound.play();
 
     // 원의 고정 해제
@@ -165,7 +165,7 @@ const event = (props: UseMatterJSProps) => {
 
       // 같은 크기인 경우에만 합치기
       if (labelA === labelB) {
-        const popSound = new Audio('/pop2.mp3');
+        const popSound = new Audio(require('../../resource/pop2.mp3'));
         popSound.play();
 
         World.remove(engine.world, bodyA);
