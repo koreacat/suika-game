@@ -16,7 +16,6 @@ let requestAnimation: number | null = null;
 let lastTime = 0;
 let fixedItemTimeOut: NodeJS.Timeout | null = null;
 let fixedItem: Matter.Body | null = null; // 고정된 원
-let isDragging = false;
 let prevPosition = { x: RENDER_WIDTH / 2, y: 50 };
 let nextFruit: Fruit | null = null;
 
@@ -89,7 +88,6 @@ const event = (props: UseMatterJSProps) => {
   Matter.Events.on(mouseConstraint, 'startdrag', (event) => {
     if(!fixedItem) return;
     fixedItemTimeOut && clearTimeout(fixedItemTimeOut);
-    isDragging = true;
 
     if (fixedItem) {
       Matter.Body.setPosition(fixedItem, {
@@ -105,7 +103,7 @@ const event = (props: UseMatterJSProps) => {
 
   // 마우스 이동 시 원을 마우스 위치로 이동
   Matter.Events.on(mouseConstraint, 'mousemove', (event: any) => {
-    if (fixedItem && isDragging) {
+    if (fixedItem) {
       Matter.Body.setPosition(fixedItem, {
         x: event.mouse.position.x,
         y: fixedItem.position.y,
@@ -121,7 +119,6 @@ const event = (props: UseMatterJSProps) => {
   Matter.Events.on(mouseConstraint, 'enddrag', (event) => {
     // 원의 고정 해제
     if (!fixedItem) return;
-    isDragging = false;
     const popSound = new Audio(require('../../resource/pop.mp3'));
     popSound.play();
     const label = fixedItem?.label as Fruit;
