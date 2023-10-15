@@ -4,7 +4,8 @@
   justify-content: center;
   width: 100%;
   height: 100%;
-
+  background: linear-gradient(0deg, white, #C3B78A, #C5A368, #AE7B38, #BC905E);
+  
   .gameWrap {
     position: relative;
     top: 0;
@@ -15,71 +16,95 @@
     flex-wrap: wrap;
     flex-direction: column;
   }
+}
+
+.topArea {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 24px;
+  transform: translate(0, -100%);
 
   .bestScoreArea {
-    position: absolute;
-    top: 0;
-    left: 0;
+    flex: 1;
+
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-    transform: translate(0, -100%);
+    color: #fff;
 
-    .best {
-      display: flex;
-      flex-direction: column;
-      margin-top: 8px;
-      color: #fff;
+    .text {
+      font-family: 'Comic Sans MS', 'Pretendard';
+      font-size: 12px;
+      font-weight: 700;
+    }
 
-      .text {
-        font-family: 'Comic Sans MS', 'Pretendard'; 
-        font-size: 12px;
-      }
-
-      .number {
-        font-family: 'Pacifico', 'Pretendard'; 
-        font-size: 24px;
-      }
+    .number {
+      font-family: 'Pacifico', 'Pretendard';
+      font-size: 34px;
+      line-height: 20px;
+      height: 30px;
+      margin-top: 6px;
     }
   }
 
   .scoreArea {
-    position: absolute;
-    top: 0;
+    flex: 1;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: flex-end;
-    transform: translate(0, -100%);
+    justify-content: center;
 
     .score {
-      font-family: 'Pacifico', 'Pretendard'; 
+      font-family: 'Pacifico', 'Pretendard';
       font-size: 64px;
       color: #fff;
     }
   }
 
   .nextArea {
-    position: absolute;
-    top: 0;
-    right: 0;
+    flex: 1;
     display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    transform: translate(0, -100%);
+    flex-direction: column;
+    align-items: end;
+
+    .text {
+      font-family: 'Comic Sans MS', 'Pretendard';
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+    }
 
     .next {
-      width: 48px;
-      height: 48px;
+      width: 30px;
+      height: 30px;
+      margin-top: 6px;
       border-radius: 50%;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: contain;
     }
   }
+}
 
-  .canvas {
-    overflow: hidden;
-    margin-top: 16px;
-    border: 16px solid #E0C889;
-    border-radius: 34px;
-  }
+.canvas {
+  overflow: hidden;
+  margin: 8px 0;
+  border: 2px solid #E0C889;
+  border-radius: 16px;
+}
+
+.bottomArea {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: end;
+  justify-content: flex-end;
+  width: 100%;
+  padding: 0 24px;
+  transform: translate(0, 100%);
+  // background: red;
 }

@@ -1,0 +1,29 @@
+.gameOverArea {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: #000000cc;
+
+  .text {
+    font-family: 'Comic Sans MS', 'Pretendard';
+    font-size: 72px;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .btn {
+    margin-top: 24px;
+    font-family: 'Comic Sans MS', 'Pretendard';
+    font-size: 36px;
+    color: #fff;
+    cursor: pointer;
+
+    &:hover {
+      font-weight: 700;
+    }
+  }
+}

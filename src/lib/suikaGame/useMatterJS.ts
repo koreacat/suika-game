@@ -3,6 +3,7 @@ import { SetStateAction, useEffect } from "react";
 import Wall from "./object/Wall";
 import { Fruit, getFruitFeature, getNextFruitFeature, getRandomFruitFeature } from "./object/Fruit";
 import { RENDER_HEIGHT, RENDER_WIDTH } from "./object/Size";
+import {GameOverLine, GameOverGuideLine} from './object/GameOverLine';
 
 const { Engine, Render, World, Mouse, MouseConstraint } = Matter;
 const engine = Engine.create();
@@ -13,8 +14,9 @@ let lastTime = 0;
 let fixedItemTimeOut: NodeJS.Timeout | null = null;
 let fixedItem: Matter.Body | null = null; // 고정된 원
 let isDragging = false;
-let prevPosition = { x: RENDER_WIDTH / 2, y: 30};
+let prevPosition = { x: RENDER_WIDTH / 2, y: 50};
 let nextFruit: Fruit | null = null;
+let isGameOver: boolean = false;
 
 const renderOptions = {
   width: RENDER_WIDTH,
@@ -31,6 +33,7 @@ const init = (props: UseMatterJSProps) => {
   engine.world.gravity.y = 2.0;
   render = Render.create({ element: canvas, engine: engine, options: renderOptions });
   World.add(engine.world, [...Wall]);
+  World.add(engine.world, [GameOverLine, GameOverGuideLine]);
   nextFruit = props.nextItem;
   createFixedItem(props);
 };
@@ -42,6 +45,7 @@ const createFixedItem = ({ setNextItem }: UseMatterJSProps) => {
   const label  = feature?.label;
   const radius = feature?.radius || 1;
   const color = feature?.color;
+  const texture = feature?.texture || '';
   fixedItem = Matter.Bodies.circle(prevPosition.x, prevPosition.y, radius, {
     isStatic: true,
     isSensor: true,
@@ -49,6 +53,11 @@ const createFixedItem = ({ setNextItem }: UseMatterJSProps) => {
     restitution: 0,
     render: {
       fillStyle: color,
+      sprite: {
+        texture: texture,
+        xScale: (radius * 2) / 256,
+        yScale: (radius * 2) / 256,
+      }
     }
   });
   World.add(engine.world, fixedItem);
@@ -95,31 +104,43 @@ const event = (props: UseMatterJSProps) => {
     if(event.body !== fixedItem) return;
     
     isDragging = false;
+    const popSound = new Audio('/pop.mp3');
+    popSound.play();
 
     // 원의 고정 해제
     if (!fixedItem) return;
-    const label = fixedItem?.label;
-    const radius = fixedItem?.circleRadius || 1;
-    const color = fixedItem?.render.fillStyle;
+
+    const label = fixedItem?.label as Fruit;
+    const feature = getFruitFeature(label);
+    const radius = feature?.radius || 1;
+    const color = feature?.color;
+    const texture = feature?.texture || '';
     const newItem = Matter.Bodies.circle(fixedItem.position.x, fixedItem.position.y, radius, {
       isStatic: false,
       label: label,
       restitution: 0,
-      friction: 0.9,
+      friction: 1,
       render: {
         fillStyle: color,
+        sprite: {
+          texture: texture,
+          xScale: (radius * 2) / 256,
+          yScale: (radius * 2) / 256,
+        }
       },
     });
 
     prevPosition.x = fixedItem.position.x;
 
     World.remove(engine.world, fixedItem);
+    World.remove(engine.world, GameOverLine);
     fixedItem = null;
     World.add(engine.world, newItem);
 
     fixedItemTimeOut = setTimeout(() => {
       createFixedItem(props);
-    }, 500);
+      World.add(engine.world, GameOverLine);
+    }, 800);
   });
 
   Matter.Events.on(engine, 'collisionStart', (event) => {
@@ -127,6 +148,13 @@ const event = (props: UseMatterJSProps) => {
     pairs.forEach((pair) => {
       const bodyA = pair.bodyA;
       const bodyB = pair.bodyB;
+
+
+      if(bodyA.label === 'gameOverLine' || bodyB.label === 'gameOverLine') {
+        props.setIsGameOver(true);
+        return;
+      }
+
       const midX = (bodyA.position.x + bodyB.position.x) / 2;
       const midY = (bodyA.position.y + bodyB.position.y) / 2;
 
@@ -138,6 +166,9 @@ const event = (props: UseMatterJSProps) => {
 
       // 같은 크기인 경우에만 합치기
       if (labelA === labelB) {
+        const popSound = new Audio('/pop2.mp3');
+        popSound.play();
+
         World.remove(engine.world, bodyA);
         World.remove(engine.world, bodyB);
 
@@ -147,16 +178,23 @@ const event = (props: UseMatterJSProps) => {
         const radius = feature?.radius || 1;
         const color = feature?.color;
         const score = feature?.score || 0;
+        const texture = feature?.texture || '';
 
         const newFruit = Matter.Bodies.circle(midX, midY, radius, {
           isStatic: false,
           label: label,
           restitution: 0,
-          friction: 0.9,
+          friction: 1,
           render: {
             fillStyle: color,
+            sprite: {
+              texture: texture,
+              xScale: (radius * 2) / 256,
+              yScale: (radius * 2) / 256,
+            }
           }
         });
+
         World.add(engine.world, newFruit);
         props.setScore(prev => prev + score);
       }
@@ -187,6 +225,8 @@ interface UseMatterJSProps {
   setScore: React.Dispatch<SetStateAction<number>>;
   nextItem: Fruit;
   setNextItem: React.Dispatch<SetStateAction<Fruit>>;
+  isGameOver: boolean;
+  setIsGameOver: React.Dispatch<SetStateAction<boolean>>;
 }
 
 const useMatterJS = (props: UseMatterJSProps) => {

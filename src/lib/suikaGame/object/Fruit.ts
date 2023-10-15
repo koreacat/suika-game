@@ -20,27 +20,27 @@ export type FruitType = keyof typeof Fruit;
 export const getFruitFeature = (fruit: FruitType) => {
   switch (fruit) {
     case Fruit.CHERRY:
-      return {color: "#FF0000", radius: RENDER_WIDTH / 30, label: Fruit.CHERRY, score: 1};
+      return {color: "#FF0000", radius: RENDER_WIDTH / 20, label: Fruit.CHERRY, score: 1, texture: `/${Fruit.CHERRY}.png`};
     case Fruit.STRAWBERRY:
-      return {color: "#FF1493", radius: RENDER_WIDTH / 25, label: Fruit.STRAWBERRY, score: 3};
+      return {color: "#FF1493", radius: RENDER_WIDTH / 15, label: Fruit.STRAWBERRY, score: 3, texture: `/${Fruit.STRAWBERRY}.png`};
     case Fruit.GRAPES:
-      return {color: "#4B0082", radius: RENDER_WIDTH / 15, label: Fruit.GRAPES, score: 6};
+      return {color: "#4B0082", radius: RENDER_WIDTH / 12, label: Fruit.GRAPES, score: 6, texture: `/${Fruit.GRAPES}.png`};
     case Fruit.ORANGE:
-      return {color: "#FFA500", radius: RENDER_WIDTH / 12, label: Fruit.ORANGE, score: 10};
+      return {color: "#FFA500", radius: RENDER_WIDTH / 10, label: Fruit.ORANGE, score: 10, texture: `/${Fruit.ORANGE}.png`};
     case Fruit.PERSIMMON:
-      return {color: "#FF4500", radius: RENDER_WIDTH / 10, label: Fruit.PERSIMMON, score: 15};
+      return {color: "#FF4500", radius: RENDER_WIDTH / 8, label: Fruit.PERSIMMON, score: 15, texture: `/${Fruit.PERSIMMON}.png`};
     case Fruit.APPLE:
-      return {color: "#FF6347", radius: RENDER_WIDTH / 8.5714, label: Fruit.APPLE, score: 21};
+      return {color: "#FF6347", radius: RENDER_WIDTH / 7, label: Fruit.APPLE, score: 21, texture: `/${Fruit.APPLE}.png`};
     case Fruit.PEAR:
-      return {color: "#D1E231", radius: RENDER_WIDTH / 7.5, label: Fruit.PEAR, score: 28};
+      return {color: "#D1E231", radius: RENDER_WIDTH / 6, label: Fruit.PEAR, score: 28, texture: `/${Fruit.PEAR}.png`};
     case Fruit.PEACH:
-      return {color: "#FFDAB9", radius: RENDER_WIDTH / 6, label: Fruit.PEACH, score: 36};
+      return {color: "#FFDAB9", radius: RENDER_WIDTH / 5, label: Fruit.PEACH, score: 36, texture: `/${Fruit.PEACH}.png`};
     case Fruit.PINEAPPLE:
-      return {color: "#FFD700", radius: RENDER_WIDTH / 5, label: Fruit.PINEAPPLE, score: 45};
+      return {color: "#FFD700", radius: RENDER_WIDTH / 4, label: Fruit.PINEAPPLE, score: 45, texture: `/${Fruit.PINEAPPLE}.png`};
     case Fruit.MELON:
-      return {color: "#90EE90", radius: RENDER_WIDTH / 4, label: Fruit.MELON, score: 55};
+      return {color: "#90EE90", radius: RENDER_WIDTH / 3.5, label: Fruit.MELON, score: 55, texture: `/${Fruit.MELON}.png`};
     case Fruit.WATERMELON:
-      return {color: "#228B22", radius: RENDER_WIDTH / 3.3333, label: Fruit.WATERMELON, score: 66};
+      return {color: "#228B22", radius: RENDER_WIDTH / 3, label: Fruit.WATERMELON, score: 66, texture: `/${Fruit.WATERMELON}.png`};
   }
 }
 
