@@ -3,7 +3,7 @@ import styles from './index.module.scss';
 import classNames from "classnames/bind";
 const cx = classNames.bind(styles);
 const BGMBtn = () => {
-  const [audio] = useState(new Audio('/bgm.mp3')); // 음악 파일 경로로 변경
+  const [audio] = useState(new Audio(require('../../../resource/bgm.mp3'))); // 음악 파일 경로로 변경
   const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {

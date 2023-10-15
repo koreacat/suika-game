@@ -9,6 +9,8 @@ import GameOverModal from './gameOverModal';
 
 const cx = classNames.bind(styles);
 
+export const getImgUrl = (fruit: Fruit) => require('../../resource/' + fruit + '.png');
+
 const SuikaGame = () => {
   const [score, setScore] = useState(0);
   const [nextItem, setNextItem] = useState<Fruit>(getRandomFruitFeature()?.label as Fruit);
@@ -34,7 +36,7 @@ const SuikaGame = () => {
           </div>
           <div className={cx('nextArea')}>
             <span className={cx('text')}>NEXT</span>
-            <span className={cx('next')} style={{ backgroundImage: `url(${getFruitFeature(nextItem)?.texture})` }} />
+            {/* <span className={cx('next')} style={{ backgroundImage: getImgUrl(nextItem) }} /> */}
           </div>
         </div>
 

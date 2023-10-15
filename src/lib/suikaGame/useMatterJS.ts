@@ -4,6 +4,7 @@ import Wall from "./object/Wall";
 import { Fruit, getFruitFeature, getNextFruitFeature, getRandomFruitFeature } from "./object/Fruit";
 import { RENDER_HEIGHT, RENDER_WIDTH } from "./object/Size";
 import {GameOverLine, GameOverGuideLine} from './object/GameOverLine';
+import { getImgUrl } from '.';
 
 const { Engine, Render, World, Mouse, MouseConstraint } = Matter;
 const engine = Engine.create();
@@ -42,10 +43,9 @@ const createFixedItem = ({ setNextItem }: UseMatterJSProps) => {
   if (fixedItem) return;
   if (!nextFruit) return;
   const feature = getFruitFeature(nextFruit);
-  const label  = feature?.label;
+  const label  = feature?.label as Fruit;
   const radius = feature?.radius || 1;
   const color = feature?.color;
-  const texture = feature?.texture || '';
   fixedItem = Matter.Bodies.circle(prevPosition.x, prevPosition.y, radius, {
     isStatic: true,
     isSensor: true,
@@ -54,7 +54,7 @@ const createFixedItem = ({ setNextItem }: UseMatterJSProps) => {
     render: {
       fillStyle: color,
       sprite: {
-        texture: texture,
+        texture: getImgUrl(label),
         xScale: (radius * 2) / 256,
         yScale: (radius * 2) / 256,
       }
@@ -114,7 +114,6 @@ const event = (props: UseMatterJSProps) => {
     const feature = getFruitFeature(label);
     const radius = feature?.radius || 1;
     const color = feature?.color;
-    const texture = feature?.texture || '';
     const newItem = Matter.Bodies.circle(fixedItem.position.x, fixedItem.position.y, radius, {
       isStatic: false,
       label: label,
@@ -123,7 +122,7 @@ const event = (props: UseMatterJSProps) => {
       render: {
         fillStyle: color,
         sprite: {
-          texture: texture,
+          texture: getImgUrl(label),
           xScale: (radius * 2) / 256,
           yScale: (radius * 2) / 256,
         }
@@ -174,11 +173,10 @@ const event = (props: UseMatterJSProps) => {
 
         // 새로운 Fruit 생성 (크기가 한 사이즈 큰 것)
         const feature = getNextFruitFeature(labelA); // 이 함수는 한 사이즈 큰 Fruit 특성을 반환하도록 수정
-        const label = feature?.label;
+        const label = feature?.label as Fruit;
         const radius = feature?.radius || 1;
         const color = feature?.color;
         const score = feature?.score || 0;
-        const texture = feature?.texture || '';
 
         const newFruit = Matter.Bodies.circle(midX, midY, radius, {
           isStatic: false,
@@ -188,7 +186,7 @@ const event = (props: UseMatterJSProps) => {
           render: {
             fillStyle: color,
             sprite: {
-              texture: texture,
+              texture: getImgUrl(label),
               xScale: (radius * 2) / 256,
               yScale: (radius * 2) / 256,
             }
