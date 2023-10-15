@@ -72,8 +72,6 @@ const SuikaGame = () => {
 
   return (
     <div className={cx('gameArea')}>
-      { !isStart && <Intro handleGameStart={handleGameStart}/>}
-
       <div className={cx('gameWrap')} style={{ visibility: isStart ? 'visible' : 'hidden'}}>
         <div className={cx('topArea')}>
           <div className={cx('bestScoreArea')}>
@@ -88,14 +86,14 @@ const SuikaGame = () => {
             <span className={cx('next')} style={{ backgroundImage: `url(${require('../../resource/' + nextItem + '.png')})` }} />
           </div>
         </div>
-
         <div id={'canvas'} className={cx('canvas')} />
-
-        <div className={cx('bottomArea')}>
-          <BGMBtn isPlaying={isPlaying} handleMusic={handleMusic} />
-        </div>
       </div>
 
+      <div className={cx('btnArea')}>
+        <BGMBtn isPlaying={isPlaying} handleMusic={handleMusic} />
+      </div>
+
+      { !isStart && <Intro handleGameStart={handleGameStart}/>}
       <GameOverModal isVisible={isGameOver} onClick={handleTryAgain} score={score} />
     </div>
   )

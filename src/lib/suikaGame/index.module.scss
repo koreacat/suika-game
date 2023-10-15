@@ -97,15 +97,8 @@
   cursor: pointer;
 }
 
-.bottomArea {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  display: flex;
-  align-items: end;
-  justify-content: flex-end;
-  width: 100%;
-  padding: 0 24px;
-  transform: translate(0, 100%);
-  // background: red;
+.btnArea {
+  position: fixed;
+  top: 16px;
+  left: 16px;
 }

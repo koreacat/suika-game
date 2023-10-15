@@ -3,20 +3,56 @@
   top: 0;
   left: 0;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
   height: 100%;
+  background: linear-gradient(0deg, #f5f1c4, #cfa76f, #a0633b);
 
-  .btn {
-    font-family: 'Comic Sans MS', 'Pretendard';
-    font-size: 72px;
-    color: #fff;
-    cursor: pointer;
+  .listWrap {
+    animation: spin 50s linear infinite; /* 빙글빙글 애니메이션 추가 */
 
-    &:hover {
-      font-weight: 700;
+    .listItem {
+      position: absolute;
+      width: 48px;
+      height: 48px;
+      background-position: center;
+      background-size: contain;
+      background-repeat: no-repeat;
+      animation: spin 5s linear infinite; /* 빙글빙글 애니메이션 추가 */
     }
+  }
+
+  .titleArea {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background: #00000020;
+
+    .btn {
+      font-family: 'Comic Sans MS', 'Pretendard';
+      font-size: 24px;
+      font-weight: 700;
+      color: #ffffffcc;
+      transition: transform 0.3s ease-out;
+      cursor: pointer;
+
+      &:hover {
+        transform: translate(0, -3px);
+        color: #ffffffff;
+      }
+    }
+  }
+}
+
+@keyframes spin {
+  0% {
+      transform: rotate(0deg);
+  }
+  100% {
+      transform: rotate(360deg);
   }
 }
