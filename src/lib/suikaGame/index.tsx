@@ -1,15 +1,12 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styles from './index.module.scss';
 import classNames from "classnames/bind";
 import useMatterJS from "./useMatterJS";
-import { Fruit, getFruitFeature, getRandomFruitFeature } from './object/Fruit';
+import { Fruit, getRandomFruitFeature } from './object/Fruit';
 import BGMBtn from './bgmBtn';
-import { RENDER_HEIGHT } from './object/Size';
 import GameOverModal from './gameOverModal';
 
 const cx = classNames.bind(styles);
-
-export const getImgUrl = (fruit: Fruit) => require('../../resource/' + fruit + '.png');
 
 const SuikaGame = () => {
   const [score, setScore] = useState(0);
@@ -36,7 +33,7 @@ const SuikaGame = () => {
           </div>
           <div className={cx('nextArea')}>
             <span className={cx('text')}>NEXT</span>
-            {/* <span className={cx('next')} style={{ backgroundImage: getImgUrl(nextItem) }} /> */}
+            <span className={cx('next')} style={{ backgroundImage: `url(${require('../../resource/' + nextItem + '.png')})` }} />
           </div>
         </div>
 
