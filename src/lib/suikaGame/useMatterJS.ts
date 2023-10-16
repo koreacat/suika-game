@@ -18,6 +18,7 @@ let fixedItemTimeOut: NodeJS.Timeout | null = null;
 let fixedItem: Matter.Body | null = null; // 고정된 원
 let prevPosition = { x: getRenderWidth() / 2, y: 50 };
 let nextFruit: Fruit | null = null;
+let prevMergingFruitIds: number[] = [];
 
 const renderOptions = {
   width: getRenderWidth(),
@@ -88,6 +89,7 @@ const event = (props: UseMatterJSProps) => {
   Matter.Events.on(mouseConstraint, 'startdrag', (event) => {
     if(!fixedItem) return;
     fixedItemTimeOut && clearTimeout(fixedItemTimeOut);
+    prevMergingFruitIds = [];
 
     if (fixedItem) {
       Matter.Body.setPosition(fixedItem, {
@@ -158,8 +160,7 @@ const event = (props: UseMatterJSProps) => {
     pairs.forEach((pair) => {
       const bodyA = pair.bodyA;
       const bodyB = pair.bodyB;
-
-
+      
       if (bodyA.label === 'gameOverLine' || bodyB.label === 'gameOverLine') {
         handleGameOver(props);
         return;
@@ -174,8 +175,12 @@ const event = (props: UseMatterJSProps) => {
       if (bodyA.isSensor || bodyB.isSensor) return;
       if (labelA === Fruit.WATERMELON && labelB === Fruit.WATERMELON) return;
 
+      // 이미 합치는 중이면 무시
+      if (prevMergingFruitIds.includes(bodyA.id) || prevMergingFruitIds.includes(bodyB.id)) return prevMergingFruitIds = [];
+
       // 같은 크기인 경우에만 합치기
       if (labelA === labelB) {
+        prevMergingFruitIds = [bodyA.id, bodyB.id];
         const popSound = new Audio(require('../../resource/pop2.mp3'));
         popSound.play();
 
