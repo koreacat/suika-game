@@ -121,6 +121,15 @@ const event = (props: UseMatterJSProps) => {
   Matter.Events.on(mouseConstraint, 'enddrag', (event) => {
     // 원의 고정 해제
     if (!fixedItem) return;
+    Matter.Body.setPosition(fixedItem, {
+      x: event.mouse.position.x,
+      y: fixedItem.position.y,
+    });
+    Matter.Body.setPosition(GuideLine, {
+      x: event.mouse.position.x,
+      y: GuideLine.position.y,
+    })
+
     const popSound = new Audio(require('../../resource/pop.mp3'));
     popSound.play();
     const label = fixedItem?.label as Fruit;
@@ -152,7 +161,7 @@ const event = (props: UseMatterJSProps) => {
       GuideLine.render.fillStyle = GuideLineColor;
       createFixedItem(props);
       World.add(engine.world, GameOverLine);
-    }, 800);
+    }, 500);
   });
 
   Matter.Events.on(engine, 'collisionStart', (event) => {

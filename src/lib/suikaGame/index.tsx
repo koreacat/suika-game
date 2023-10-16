@@ -51,7 +51,7 @@ const SuikaGame = () => {
   return (
     <div className={cx('gameArea')}>
       <div className={cx('gameWrap')} style={{ visibility: isStart ? 'visible' : 'hidden'}}>
-
+        
         <div className={cx('canvasArea')}>
           <div className={cx('topArea')} style={{maxWidth: getRenderWidth()}}>
             <div className={cx('bestScoreArea')}>
