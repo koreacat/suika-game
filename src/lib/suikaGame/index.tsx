@@ -52,7 +52,7 @@ const SuikaGame = () => {
     <div className={cx('gameArea')}>
       <div className={cx('gameWrap')} style={{ visibility: isStart ? 'visible' : 'hidden'}}>
 
-        <div id={'canvas'} className={cx('canvasArea')}>
+        <div className={cx('canvasArea')}>
           <div className={cx('topArea')} style={{maxWidth: getRenderWidth()}}>
             <div className={cx('bestScoreArea')}>
               <span className={cx('text')}>BEST SCORE</span>
@@ -66,7 +66,7 @@ const SuikaGame = () => {
               <span className={cx('next')} style={{ backgroundImage: `url(${require('../../resource/' + nextItem + '.png')})` }} />
             </div>
           </div>
-
+          <div id={'canvasWrap'}/>
         </div>
       </div>
 

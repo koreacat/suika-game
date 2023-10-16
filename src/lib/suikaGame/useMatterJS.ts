@@ -28,11 +28,11 @@ const renderOptions = {
 };
 
 const init = (props: UseMatterJSProps) => {
-  const canvas = document.getElementById('canvas');
-  if (!canvas) return;
-  // while (canvas.hasChildNodes() && canvas.firstChild) canvas.removeChild(canvas.firstChild);
+  const canvasWrapEl = document.getElementById('canvasWrap');
+  if (!canvasWrapEl) return;
+  while (canvasWrapEl.hasChildNodes() && canvasWrapEl.firstChild) canvasWrapEl.removeChild(canvasWrapEl.firstChild);
   engine.world.gravity.y = 2.0;
-  render = Render.create({ element: canvas, engine: engine, options: renderOptions });
+  render = Render.create({ element: canvasWrapEl, engine: engine, options: renderOptions });
   World.add(engine.world, [...Wall]);
   World.add(engine.world, [GameOverLine, GameOverGuideLine, GuideLine]);
   nextFruit = props.nextItem;
