@@ -14,7 +14,7 @@ const SuikaGame = () => {
   const [score, setScore] = useState(0);
   const [nextItem, setNextItem] = useState<Fruit>(getRandomFruitFeature()?.label as Fruit);
   const [isStart, setIsStart] = useState<boolean>(false);
-  const [isGameOver, setIsGameOver] = useState<boolean>(false);
+  const [isGameOver, setIsGameOver] = useState<boolean>(true);
 
   const { clear } = useMatterJS({ score, setScore, nextItem, setNextItem, isGameOver, setIsGameOver });
 
