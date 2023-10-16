@@ -1,2 +1,2 @@
-export const RENDER_WIDTH = Math.min(window.innerWidth - 8, 400);
-export const RENDER_HEIGHT = Math.min(window.innerHeight - 4, 700);
+export const getRenderHeight = () => Math.min(window.innerHeight - 64 - 8, 700);
+export const getRenderWidth = () => getRenderHeight() * 0.5714 - 4;

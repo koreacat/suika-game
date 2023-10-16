@@ -1,4 +1,4 @@
-import { RENDER_WIDTH } from "./Size";
+import { getRenderWidth } from "./Size";
 
 export enum Fruit {
   BLUEBERRY = "BLUEBERRY",
@@ -19,27 +19,27 @@ export type FruitType = keyof typeof Fruit;
 export const getFruitFeature = (fruit: FruitType) => {
   switch (fruit) {
     case Fruit.BLUEBERRY:
-      return {radius: RENDER_WIDTH / 24, label: Fruit.BLUEBERRY, score: 1};
+      return {radius: getRenderWidth() / 24, label: Fruit.BLUEBERRY, score: 1};
     case Fruit.STRAWBERRY:
-      return {radius: RENDER_WIDTH / 18, label: Fruit.STRAWBERRY, score: 3};
+      return {radius: getRenderWidth() / 18, label: Fruit.STRAWBERRY, score: 3};
     case Fruit.TANGERINE:
-      return {radius: RENDER_WIDTH / 12, label: Fruit.TANGERINE, score: 6};
+      return {radius: getRenderWidth() / 12, label: Fruit.TANGERINE, score: 6};
     case Fruit.TOMATO:
-      return {radius: RENDER_WIDTH / 10, label: Fruit.TOMATO, score: 10};
+      return {radius: getRenderWidth() / 10, label: Fruit.TOMATO, score: 10};
     case Fruit.AVOCADO:
-      return {radius: RENDER_WIDTH / 8, label: Fruit.AVOCADO, score: 15};
+      return {radius: getRenderWidth() / 8, label: Fruit.AVOCADO, score: 15};
     case Fruit.KOREANMELON:
-      return {radius: RENDER_WIDTH / 7, label: Fruit.KOREANMELON, score: 21};
+      return {radius: getRenderWidth() / 7, label: Fruit.KOREANMELON, score: 21};
     case Fruit.APPLE:
-      return {radius: RENDER_WIDTH / 6, label: Fruit.APPLE, score: 28};
+      return {radius: getRenderWidth() / 6, label: Fruit.APPLE, score: 28};
     case Fruit.PEACH:
-      return {radius: RENDER_WIDTH / 5, label: Fruit.PEACH, score: 36};
+      return {radius: getRenderWidth() / 5, label: Fruit.PEACH, score: 36};
     case Fruit.COCONUT:
-      return {radius: RENDER_WIDTH / 4, label: Fruit.COCONUT, score: 45};
+      return {radius: getRenderWidth() / 4, label: Fruit.COCONUT, score: 45};
     case Fruit.MELON:
-      return {radius: RENDER_WIDTH / 3.5, label: Fruit.MELON, score: 55};
+      return {radius: getRenderWidth() / 3.5, label: Fruit.MELON, score: 55};
     case Fruit.WATERMELON:
-      return {radius: RENDER_WIDTH / 3, label: Fruit.WATERMELON, score: 66};
+      return {radius: getRenderWidth() / 3, label: Fruit.WATERMELON, score: 66};
   }
 }
 

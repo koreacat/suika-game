@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styles from './index.module.scss';
 import classNames from "classnames/bind";
 const cx = classNames.bind(styles);
@@ -11,8 +11,8 @@ interface BGMBtnProps {
 const BGMBtn = ({isPlaying, handleMusic}: BGMBtnProps) => {
   return (
     <button className={cx("bgmBtn", { playing: isPlaying })} onClick={handleMusic}>
-      <div className={cx("border")}></div>
-      <div className={cx("play")}></div>
+      <div className={cx("border")}/>
+      <div className={cx("play")}/>
     </button>
   );
 };

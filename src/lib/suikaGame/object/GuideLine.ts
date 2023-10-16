@@ -1,13 +1,13 @@
 import Matter from "matter-js";
-import { RENDER_WIDTH, RENDER_HEIGHT } from "./Size";
+import { getRenderWidth, getRenderHeight } from "./Size";
 
 export const GuideLineColor = '#ffffff30';
 
 export const GuideLine = Matter.Bodies.rectangle(
-    RENDER_WIDTH / 2,
-    RENDER_HEIGHT / 2 + 40,
+    getRenderWidth() / 2,
+    getRenderHeight() / 2 + 40,
     5,
-    RENDER_HEIGHT,
+    getRenderHeight(),
     {
         isStatic: true, 
         isSensor: true, 

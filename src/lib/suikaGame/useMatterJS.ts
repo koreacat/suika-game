@@ -2,7 +2,7 @@ import Matter from 'matter-js';
 import { SetStateAction, useEffect } from "react";
 import Wall from "./object/Wall";
 import { Fruit, getFruitFeature, getNextFruitFeature, getRandomFruitFeature } from "./object/Fruit";
-import { RENDER_HEIGHT, RENDER_WIDTH } from "./object/Size";
+import { getRenderHeight, getRenderWidth } from "./object/Size";
 import { GameOverLine, GameOverGuideLine } from './object/GameOverLine';
 import { GuideLine, GuideLineColor } from './object/GuideLine';
 
@@ -16,12 +16,12 @@ let requestAnimation: number | null = null;
 let lastTime = 0;
 let fixedItemTimeOut: NodeJS.Timeout | null = null;
 let fixedItem: Matter.Body | null = null; // 고정된 원
-let prevPosition = { x: RENDER_WIDTH / 2, y: 50 };
+let prevPosition = { x: getRenderWidth() / 2, y: 50 };
 let nextFruit: Fruit | null = null;
 
 const renderOptions = {
-  width: RENDER_WIDTH,
-  height: RENDER_HEIGHT,
+  width: getRenderWidth(),
+  height: getRenderHeight(),
   wireframes: false,
   background: '#ffffff40',
   borderRadius: '16px',
@@ -30,7 +30,7 @@ const renderOptions = {
 const init = (props: UseMatterJSProps) => {
   const canvas = document.getElementById('canvas');
   if (!canvas) return;
-  while (canvas.hasChildNodes() && canvas.firstChild) canvas.removeChild(canvas.firstChild);
+  // while (canvas.hasChildNodes() && canvas.firstChild) canvas.removeChild(canvas.firstChild);
   engine.world.gravity.y = 2.0;
   render = Render.create({ element: canvas, engine: engine, options: renderOptions });
   World.add(engine.world, [...Wall]);

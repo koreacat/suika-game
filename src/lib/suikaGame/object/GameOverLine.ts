@@ -1,10 +1,10 @@
 import Matter from "matter-js";
-import { RENDER_WIDTH, RENDER_HEIGHT } from "./Size";
-const LINE_WIDTH = RENDER_WIDTH * 10;
+import { getRenderWidth, getRenderHeight } from "./Size";
+const LINE_WIDTH = getRenderWidth() * 10;
 const LINE_HEIGHT = 8;
 export const GameOverLine = Matter.Bodies.rectangle(
-    RENDER_WIDTH / 2,
-    RENDER_HEIGHT / 6.5 - 30,
+    getRenderWidth() / 2,
+    getRenderHeight() / 6.5 - 30,
     LINE_WIDTH,
     LINE_HEIGHT,
     {
@@ -17,8 +17,8 @@ export const GameOverLine = Matter.Bodies.rectangle(
 );
 
 export const GameOverGuideLine = Matter.Bodies.rectangle(
-    RENDER_WIDTH / 2,
-    RENDER_HEIGHT / 6.5,
+    getRenderWidth() / 2,
+    getRenderHeight() / 6.5,
     LINE_WIDTH,
     LINE_HEIGHT,
     {
