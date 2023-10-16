@@ -208,7 +208,7 @@ const event = (props: UseMatterJSProps) => {
     });
   });
 
-  World.add(engine.world, mouseConstraint);
+  // World.add(engine.world, mouseConstraint);
 };
 
 const animate = (currentTime: number) => {
