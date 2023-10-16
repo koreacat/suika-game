@@ -5,7 +5,7 @@ import useMatterJS from "./useMatterJS";
 import { Fruit, getRandomFruitFeature } from './object/Fruit';
 import GameOverModal from './gameOverModal';
 import Intro from './intro';
-import {getRenderWidth} from "./object/Size";
+import Header from './header';
 
 const cx = classNames.bind(styles);
 
@@ -33,10 +33,6 @@ const SuikaGame = () => {
     }
   }, [isGameOver]);
 
-  const getBestScore = () => {
-    return score > bestScore ? score : bestScore;
-  }
-
   const handleTryAgain = () => {
     setScore(0);
     setNextItem(getRandomFruitFeature()?.label as Fruit);
@@ -51,21 +47,8 @@ const SuikaGame = () => {
   return (
     <div className={cx('gameArea')}>
       <div className={cx('gameWrap')} style={{ visibility: isStart ? 'visible' : 'hidden'}}>
-        
         <div className={cx('canvasArea')}>
-          <div className={cx('topArea')} style={{maxWidth: getRenderWidth()}}>
-            <div className={cx('bestScoreArea')}>
-              <span className={cx('text')}>BEST SCORE</span>
-              <span className={cx('number')}>{getBestScore()}</span>
-            </div>
-            <div className={cx('scoreArea')}>
-              <span className={cx('score')}>{score}</span>
-            </div>
-            <div className={cx('nextArea')}>
-              <span className={cx('text')}>NEXT</span>
-              <span className={cx('next')} style={{ backgroundImage: `url(${require('../../resource/' + nextItem + '.png')})` }} />
-            </div>
-          </div>
+          <Header bestScore={bestScore} score={score} nextItem={nextItem}/>
           <div id={'canvasWrap'}/>
         </div>
       </div>
