@@ -14,8 +14,8 @@ const GameOverModal = ({ isVisible, onClick, score }: GameOverModalProps) => {
 
   return (
     <div className={cx('gameOverArea')}>
-      <span className={cx('score')}>SCORE: {score}</span>
       <span className={cx('text')}>GAME OVER</span>
+      <span className={cx('score')}>SCORE: {score}</span>
       <button className={cx('btn')} onClick={onClick}>TRY AGAIN?</button>
     </div>
   )
