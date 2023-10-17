@@ -161,7 +161,7 @@ const event = (props: UseMatterJSProps) => {
       GuideLine.render.fillStyle = GuideLineColor;
       createFixedItem(props);
       World.add(engine.world, GameOverLine);
-    }, 500);
+    }, 750);
   });
 
   Matter.Events.on(engine, 'collisionStart', (event) => {
