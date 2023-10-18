@@ -41,6 +41,14 @@
       cursor: pointer;
     }
   }
+
+  .fatchLink {
+    position: fixed;
+    bottom: 32px;
+    font-size: 1em;
+    font-weight: 700;
+    color: #ffffff;
+  }
 }
 
 @keyframes spin {

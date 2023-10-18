@@ -21,7 +21,7 @@ const Intro = ({ handleGameStart }: IntroProps) => {
     };
 };
 
-  const fruitItemEls = Object.keys(Fruit).map((fruit, index) => {
+  const fruitItemEls = Object.keys(Fruit).slice(0, Object.keys(Fruit).length - 1).map((fruit, index) => {
     const itemPositions = positionCircularly(11, index);
 
     return (
@@ -45,6 +45,8 @@ const Intro = ({ handleGameStart }: IntroProps) => {
       <div className={cx('titleArea')}>
         <button className={cx('btn')} onClick={onClick}>GAME START</button>
       </div>
+
+      <a href={'https://github.com/koreacat/suika-game#readme'} target='_blank' className={cx('fatchLink')}>패치 노트</a>
     </div>
   )
 }

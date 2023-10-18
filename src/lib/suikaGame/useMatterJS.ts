@@ -46,11 +46,14 @@ const createFixedItem = ({ setNextItem }: UseMatterJSProps) => {
   const feature = getFruitFeature(nextFruit);
   const label = feature?.label as Fruit;
   const radius = feature?.radius || 1;
+  const mass = feature?.mass || 1;
   fixedItem = Matter.Bodies.circle(prevPosition.x, prevPosition.y, radius, {
     isStatic: true,
     isSensor: true,
     label: label,
     restitution: 0,
+    mass: mass,
+    friction: 1,
     render: {
       sprite: {
         texture: getImgUrl(label),
@@ -71,6 +74,25 @@ const handleGameOver = (props: UseMatterJSProps) => {
   requestAnimation && cancelAnimationFrame(requestAnimation);
 }
 
+const clamp = (value: number, min: number, max: number) => {
+  return Math.min(Math.max(value, min), max);
+}
+
+const setPositionFixedItem = (event: any) => {
+  if(!fixedItem) return;
+  const minX = fixedItem.circleRadius ? fixedItem.circleRadius : 0;
+  const maxX = fixedItem.circleRadius ? getRenderWidth() - fixedItem.circleRadius : getRenderWidth();
+
+  Matter.Body.setPosition(fixedItem, {
+    x: clamp(event.mouse.position.x, minX, maxX),
+    y: fixedItem.position.y,
+  });
+  Matter.Body.setPosition(GuideLine, {
+    x: clamp(event.mouse.position.x, minX, maxX),
+    y: GuideLine.position.y,
+  })
+}
+
 const event = (props: UseMatterJSProps) => {
   if (!render) return;
 
@@ -86,59 +108,35 @@ const event = (props: UseMatterJSProps) => {
   });
 
   // 마우스 버튼 누르면 원 이동 시작
-  Matter.Events.on(mouseConstraint, 'startdrag', (event) => {
+  Matter.Events.on(mouseConstraint, 'startdrag', (event: any) => {
     if(!fixedItem) return;
     fixedItemTimeOut && clearTimeout(fixedItemTimeOut);
     prevMergingFruitIds = [];
-
-    if (fixedItem) {
-      Matter.Body.setPosition(fixedItem, {
-        x: event.mouse.position.x,
-        y: fixedItem.position.y,
-      });
-      Matter.Body.setPosition(GuideLine, {
-        x: event.mouse.position.x,
-        y: GuideLine.position.y,
-      })
-    }
+    setPositionFixedItem(event);
   });
 
   // 마우스 이동 시 원을 마우스 위치로 이동
   Matter.Events.on(mouseConstraint, 'mousemove', (event: any) => {
-    if (fixedItem) {
-      Matter.Body.setPosition(fixedItem, {
-        x: event.mouse.position.x,
-        y: fixedItem.position.y,
-      });
-      Matter.Body.setPosition(GuideLine, {
-        x: event.mouse.position.x,
-        y: GuideLine.position.y,
-      })
-    }
+    setPositionFixedItem(event);
   });
 
   // 마우스 버튼 뗄 때 원의 고정 해제
-  Matter.Events.on(mouseConstraint, 'enddrag', (event) => {
+  Matter.Events.on(mouseConstraint, 'enddrag', (event: any) => {
     // 원의 고정 해제
     if (!fixedItem) return;
-    Matter.Body.setPosition(fixedItem, {
-      x: event.mouse.position.x,
-      y: fixedItem.position.y,
-    });
-    Matter.Body.setPosition(GuideLine, {
-      x: event.mouse.position.x,
-      y: GuideLine.position.y,
-    })
+    setPositionFixedItem(event);
 
     const popSound = new Audio(require('../../resource/pop.mp3'));
     popSound.play();
     const label = fixedItem?.label as Fruit;
     const feature = getFruitFeature(label);
     const radius = feature?.radius || 1;
+    const mass = feature?.mass || 1;
     const newItem = Matter.Bodies.circle(fixedItem.position.x, fixedItem.position.y, radius, {
       isStatic: false,
       label: label,
       restitution: 0,
+      mass: mass,
       friction: 1,
       render: {
         sprite: {
@@ -182,7 +180,7 @@ const event = (props: UseMatterJSProps) => {
       const labelB = bodyB.label as Fruit;
 
       if (bodyA.isSensor || bodyB.isSensor) return;
-      if (labelA === Fruit.WATERMELON && labelB === Fruit.WATERMELON) return;
+      if (labelA === Fruit.GOLDWATERMELON && labelB === Fruit.GOLDWATERMELON) return;
 
       // 이미 합치는 중이면 무시
       if (prevMergingFruitIds.includes(bodyA.id) || prevMergingFruitIds.includes(bodyB.id)) return prevMergingFruitIds = [];
@@ -200,12 +198,14 @@ const event = (props: UseMatterJSProps) => {
         const feature = getNextFruitFeature(labelA); // 이 함수는 한 사이즈 큰 Fruit 특성을 반환하도록 수정
         const label = feature?.label as Fruit;
         const radius = feature?.radius || 1;
+        const mass = feature?.mass || 1;
         const score = feature?.score || 0;
 
         const newFruit = Matter.Bodies.circle(midX, midY, radius, {
           isStatic: false,
           label: label,
           restitution: 0,
+          mass: mass,
           friction: 1,
           render: {
             sprite: {

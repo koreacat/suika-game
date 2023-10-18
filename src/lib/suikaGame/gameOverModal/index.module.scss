@@ -25,21 +25,23 @@
   }
 
   .btn {
+    padding: .5em .7em;
     margin-top: 36px;
+    background: #fff;
+
     font-family: 'Patrick Hand', 'Pretendard';
     font-size: 2em;
-    color: #fff;
+    font-weight: 700;
+    color: #000;
+    border-radius: 36px;
     cursor: pointer;
-
-    &:hover {
-      font-weight: 700;
-    }
   }
   
   .formsLink {
     position: fixed;
     bottom: 32px;
-    font-size: 0.7em;
+    font-size: 1em;
+    font-weight: 700;
     color: #ffffff;
   }
 }
