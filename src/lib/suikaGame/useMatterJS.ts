@@ -141,8 +141,8 @@ const event = (props: UseMatterJSProps) => {
       render: {
         sprite: {
           texture: getImgUrl(label),
-          xScale: (radius * 2) / 256,
-          yScale: (radius * 2) / 256,
+          xScale: (radius * 2) / 250,
+          yScale: (radius * 2) / 250,
         }
       },
     });
@@ -210,8 +210,8 @@ const event = (props: UseMatterJSProps) => {
           render: {
             sprite: {
               texture: getImgUrl(label),
-              xScale: (radius * 2) / 256,
-              yScale: (radius * 2) / 256,
+              xScale: (radius * 2) / 250,
+              yScale: (radius * 2) / 250,
             }
           }
         });
