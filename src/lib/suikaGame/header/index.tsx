@@ -19,7 +19,7 @@ const Header = ({score, bestScore, nextItem}: HeaderProps) => {
   return (
     <div className={cx('headerArea')} style={{ maxWidth: getRenderWidth() }}>
       <div className={cx('bestScoreArea')}>
-        <span className={cx('text')}>BEST SCORE</span>
+        <span className={cx('text')}>BEST</span>
         <span className={cx('number')}>{getBestScore()}</span>
       </div>
       <div className={cx('scoreArea')}>
