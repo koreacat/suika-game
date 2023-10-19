@@ -11,13 +11,13 @@ interface HeaderProps {
   nextItem: null | Fruit;
 }
 
-const Header = ({score, bestScore, nextItem}: HeaderProps) => {
+const Header = ({ score, bestScore, nextItem }: HeaderProps) => {
   const getBestScore = () => {
     return score > bestScore ? score : bestScore;
   }
 
   return (
-    <div className={cx('headerArea')} style={{ maxWidth: getRenderWidth() }}>
+    <div className={cx('headerArea')} style={{ maxWidth: getRenderWidth() + 4 }}>
       <div className={cx('bestScoreArea')}>
         <span className={cx('text')}>BEST</span>
         <span className={cx('number')}>{getBestScore()}</span>
@@ -27,7 +27,9 @@ const Header = ({score, bestScore, nextItem}: HeaderProps) => {
       </div>
       <div className={cx('nextArea')}>
         <span className={cx('text')}>NEXT</span>
-        <span className={cx('next')} style={{ backgroundImage: `url(${require('../../../resource/' + nextItem + '.png')})` }} />
+        <div className={cx('next')}>
+          <span className={cx('img')} style={{ backgroundImage: `url(${require('../../../resource/' + nextItem + '.png')})` }} />
+        </div>
       </div>
     </div>
   )

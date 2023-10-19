@@ -49,7 +49,7 @@ const SuikaGame = () => {
       <div className={cx('gameWrap')} style={{ visibility: isStart ? 'visible' : 'hidden'}}>
         <div className={cx('canvasArea')}>
           <Header bestScore={bestScore} score={score} nextItem={nextItem}/>
-          <div id={'canvasWrap'}/>
+          <div id={'canvasWrap'} className={cx('canvasWrap')}/>
         </div>
       </div>
 
