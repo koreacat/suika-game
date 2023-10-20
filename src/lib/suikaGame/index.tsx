@@ -53,7 +53,7 @@ const SuikaGame = () => {
         </div>
       </div>
 
-      { !isStart && <Intro handleGameStart={handleGameStart}/>}
+      <Intro isVisible={!isStart} handleGameStart={handleGameStart}/>
       <GameOverModal isVisible={isGameOver} onClick={handleTryAgain} score={score} />
     </div>
   )
