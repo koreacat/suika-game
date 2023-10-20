@@ -50,7 +50,7 @@ const Intro = ({isVisible, handleGameStart}: IntroProps) => {
         <button className={cx('btn')} onClick={onClick}>GAME START</button>
       </div>
 
-      <a href={'https://github.com/koreacat/suika-game#readme'} target='_blank' className={cx('fatchLink')}>패치 노트</a>
+      <a href={'https://github.com/koreacat/suika-game#readme'} target='_blank' className={cx('patchLink')}>패치노트</a>
     </div>
   )
 }
