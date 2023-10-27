@@ -5,6 +5,7 @@ import { Fruit, getFruitFeature, getNextFruitFeature, getRandomFruitFeature } fr
 import { getRenderHeight, getRenderWidth } from "./object/Size";
 import { GameOverLine, GameOverGuideLine } from './object/GameOverLine';
 import { GuideLine, GuideLineColor } from './object/GuideLine';
+import useConfetti from "./useConfetti";
 
 const { Engine, Render, World, Mouse, MouseConstraint } = Matter;
 const frameInterval = 1000 / 60; // 60fps
@@ -93,7 +94,7 @@ const setPositionFixedItem = (event: any) => {
   })
 }
 
-const event = (props: UseMatterJSProps) => {
+const event = (props: UseMatterJSProps, effects: { fireConfetti: () => void, fireRapidStarConfetti: () => void }) => {
   if (!render) return;
 
   const mouse = Mouse.create(render.canvas);
@@ -188,6 +189,8 @@ const event = (props: UseMatterJSProps) => {
       // 같은 크기인 경우에만 합치기
       if (labelA === labelB) {
         prevMergingFruitIds = [bodyA.id, bodyB.id];
+        
+        // 과일이 합쳐질 때 사운드 효과
         const popSound = new Audio(require('../../resource/pop2.mp3'));
         popSound.play();
 
@@ -200,6 +203,12 @@ const event = (props: UseMatterJSProps) => {
         const radius = feature?.radius || 1;
         const mass = feature?.mass || 1;
         const score = feature?.score || 0;
+
+        // 수박이 만들어지면 폭죽 이펙트
+        if(label === Fruit.WATERMELON) effects.fireConfetti();
+
+        // 황금 수박이 만들어지면 별 이펙트
+        if(label === Fruit.GOLDWATERMELON) effects.fireRapidStarConfetti();
 
         const newFruit = Matter.Bodies.circle(midX, midY, radius, {
           isStatic: false,
@@ -252,9 +261,11 @@ interface UseMatterJSProps {
 }
 
 const useMatterJS = (props: UseMatterJSProps) => {
+  const { fireConfetti, fireRapidStarConfetti } = useConfetti();
+
   useEffect(() => {
     init(props);
-    event(props);
+    event(props, { fireConfetti, fireRapidStarConfetti });
     run();
 
     return (() => {
@@ -266,7 +277,7 @@ const useMatterJS = (props: UseMatterJSProps) => {
     fixedItem = null;
     engine = Engine.create();
     init(props);
-    event(props);
+    event(props, { fireConfetti, fireRapidStarConfetti });
     run();
   }
 
