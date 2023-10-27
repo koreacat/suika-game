@@ -49,7 +49,8 @@ export const getFruitFeature = (fruit: FruitType) => {
 export const getRandomFruitFeature = () => {
   const fruits = Object.values(Fruit).slice(0, 5);
   const randomIndex = Math.floor(Math.random() * fruits.length); // 무작위 인덱스 선택
-  return getFruitFeature(fruits[randomIndex]);
+  // return getFruitFeature(fruits[randomIndex]);
+  return getFruitFeature(Fruit.MELON);
 };
 
 export const getNextFruitFeature = (currentFruit: Fruit) => {

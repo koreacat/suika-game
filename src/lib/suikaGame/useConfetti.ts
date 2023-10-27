@@ -16,26 +16,26 @@ const useConfetti = () => {
     }
 
     fire(0.25, {
-      spread: 100,
+      spread: 90,
       startVelocity: 55,
     });
     fire(0.2, {
-      spread: 110,
+      spread: 90,
     });
     fire(0.35, {
-      spread: 120,
+      spread: 90,
       startVelocity: 75,
       decay: 0.91,
       scalar: 0.8,
     });
     fire(0.1, {
-      spread: 130,
+      spread: 90,
       startVelocity: 55,
       decay: 0.92,
       scalar: 1.2,
     });
     fire(0.1, {
-      spread: 140,
+      spread: 90,
       startVelocity: 75,
     });
   };
@@ -47,16 +47,16 @@ const useConfetti = () => {
     (function frame() {
       confetti({
         particleCount: 2,
-        angle: 60,
+        angle: 80,
         spread: 55,
-        origin: { x: 0 },
+        origin: { x: 0, y: 0.8 },
         colors: colors
       });
       confetti({
         particleCount: 2,
-        angle: 120,
+        angle: 100,
         spread: 55,
-        origin: { x: 1 },
+        origin: { x: 1, y: 0.8 },
         colors: colors
       });
 
