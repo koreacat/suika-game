@@ -1,5 +1,6 @@
 import { Fruit } from '../object/Fruit';
 import { getRenderWidth } from '../object/Size';
+import NumberAnimation from './NumberAnimation';
 import styles from './index.module.scss';
 import classNames from "classnames/bind";
 
@@ -23,7 +24,9 @@ const Header = ({ score, bestScore, nextItem }: HeaderProps) => {
         <span className={cx('number')}>{getBestScore()}</span>
       </div>
       <div className={cx('scoreArea')}>
-        <span className={cx('score')}>{score}</span>
+        <span className={cx('score')}>
+          <NumberAnimation value={score} />
+        </span>
       </div>
       <div className={cx('nextArea')}>
         <span className={cx('text')}>NEXT</span>
