@@ -1,0 +1,10 @@
+import Matter from "matter-js";
+import { getRenderHeight, getRenderWidth } from "./Size";
+var WALL_WIDTH = getRenderWidth() * 10;
+var WALL_HEIGHT = getRenderHeight() * 10;
+var wallBack = Matter.Bodies.rectangle(getRenderWidth(), getRenderHeight(), getRenderWidth() * 2, getRenderHeight() * 2, { isStatic: true, isSensor: true, render: { fillStyle: 'none' } });
+var wallBottom = Matter.Bodies.rectangle(getRenderWidth() / 2, (WALL_HEIGHT + getRenderHeight() * 2) / 2, WALL_WIDTH, WALL_HEIGHT, { isStatic: true, friction: 1, render: { fillStyle: 'none' } });
+var wallLeft = Matter.Bodies.rectangle(-WALL_WIDTH / 2, getRenderHeight() / 2, WALL_WIDTH, WALL_HEIGHT, { isStatic: true, friction: 1, render: { fillStyle: 'none' } });
+var wallRight = Matter.Bodies.rectangle(WALL_WIDTH / 2 + getRenderWidth(), getRenderHeight() / 2, WALL_WIDTH, WALL_HEIGHT, { isStatic: true, friction: 1, render: { fillStyle: 'none' } });
+var Wall = [wallBack, wallBottom, wallLeft, wallRight];
+export default Wall;

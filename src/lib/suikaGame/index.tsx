@@ -26,7 +26,6 @@ const SuikaGame = () => {
   useEffect(() => {
     if(isGameOver) {
       const bestScore = localStorage.getItem('bestScore') || 0;
-      console.log(bestScore, score);
       if (score > Number(bestScore)) {
         localStorage.setItem('bestScore', score.toString());
       }

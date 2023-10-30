@@ -12,7 +12,7 @@ export const GameOverLine = Matter.Bodies.rectangle(
         isSensor: true, 
         collisionFilter: { group: -1 }, 
         render: { fillStyle: '#ffffff00' },
-        label: 'gameOverLine',
+        label: 'GAME_OVER_LINE',
     }
 );
 
@@ -26,6 +26,6 @@ export const GameOverGuideLine = Matter.Bodies.rectangle(
         isSensor: true, 
         collisionFilter: { group: -1 }, 
         render: { fillStyle: '#ffffff20' },
-        label: 'guideLine',
+        label: 'GAME_OVER_GUIDE_LINE',
     }
 )

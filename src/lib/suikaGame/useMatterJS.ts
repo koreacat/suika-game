@@ -1,6 +1,6 @@
 import Matter from 'matter-js';
 import { SetStateAction, useEffect } from "react";
-import Wall from "./object/Wall";
+import Wall, { WALL_BACK } from "./object/Wall";
 import { Fruit, getFruitFeature, getNextFruitFeature, getRandomFruitFeature } from "./object/Fruit";
 import { getRenderHeight, getRenderWidth } from "./object/Size";
 import { GameOverLine, GameOverGuideLine } from './object/GameOverLine';
@@ -16,7 +16,8 @@ let render: Matter.Render | null = null;
 let requestAnimation: number | null = null;
 let lastTime = 0;
 let fixedItemTimeOut: NodeJS.Timeout | null = null;
-let fixedItem: Matter.Body | null = null; // 고정된 원
+let fixedItem: Matter.Body | null = null; // 고정된 아이템
+let newItem: Matter.Body | null = null; // 떨어지는 아이템
 let prevPosition = { x: getRenderWidth() / 2, y: 50 };
 let nextFruit: Fruit | null = null;
 let prevMergingFruitIds: number[] = [];
@@ -36,7 +37,7 @@ const init = (props: UseMatterJSProps) => {
   engine.world.gravity.y = 2.0;
   render = Render.create({ element: canvasWrapEl, engine: engine, options: renderOptions });
   World.add(engine.world, [...Wall]);
-  World.add(engine.world, [GameOverLine, GameOverGuideLine, GuideLine]);
+  World.add(engine.world, [GameOverGuideLine, GuideLine]);
   nextFruit = props.nextItem;
   createFixedItem(props);
 };
@@ -133,7 +134,7 @@ const event = (props: UseMatterJSProps, effects: { fireConfetti: () => void, fir
     const feature = getFruitFeature(label);
     const radius = feature?.radius || 1;
     const mass = feature?.mass || 1;
-    const newItem = Matter.Bodies.circle(fixedItem.position.x, fixedItem.position.y, radius, {
+    newItem = Matter.Bodies.circle(fixedItem.position.x, fixedItem.position.y, radius, {
       isStatic: false,
       label: label,
       restitution: 0,
@@ -159,7 +160,6 @@ const event = (props: UseMatterJSProps, effects: { fireConfetti: () => void, fir
     fixedItemTimeOut = setTimeout(() => {
       GuideLine.render.fillStyle = GuideLineColor;
       createFixedItem(props);
-      World.add(engine.world, GameOverLine);
     }, 750);
   });
 
@@ -168,8 +168,21 @@ const event = (props: UseMatterJSProps, effects: { fireConfetti: () => void, fir
     pairs.forEach((pair) => {
       const bodyA = pair.bodyA;
       const bodyB = pair.bodyB;
+
+      if (bodyA.id === newItem?.id || bodyB.id === newItem?.id) {
+
+        // @ts-ignore
+        if (bodyA.label === WALL_BACK.label || bodyB.label === WALL_BACK.label) return;
+        if (bodyA.label === GuideLine.label || bodyB.label === GuideLine.label) return;
+        if (bodyA.label === GameOverGuideLine.label || bodyB.label === GameOverGuideLine.label) return;
+        if (bodyA.id === fixedItem?.id || bodyB.id === fixedItem?.id) return;
+
+        if (!engine.world.bodies.includes(GameOverLine)) {
+          World.add(engine.world, GameOverLine);
+        }
+      }
       
-      if (bodyA.label === 'gameOverLine' || bodyB.label === 'gameOverLine') {
+      if (bodyA.label === GameOverLine.label || bodyB.label === GameOverLine.label) {
         handleGameOver(props);
         return;
       }

@@ -34,7 +34,7 @@ export const getFruitFeature = (fruit: FruitType) => {
     case Fruit.APPLE:
       return { radius: getRenderWidth() / 6, mass: 1, label: Fruit.APPLE, score: 28 };
     case Fruit.PEACH:
-      return { radius: getRenderWidth() / 5, mass: 1, label: Fruit.PEACH, score: 36 };
+      return { radius: getRenderWidth() / 5.3, mass: 1, label: Fruit.PEACH, score: 36 };
     case Fruit.COCONUT:
       return { radius: getRenderWidth() / 4.6, mass: 1, label: Fruit.COCONUT, score: 45 };
     case Fruit.MELON:
