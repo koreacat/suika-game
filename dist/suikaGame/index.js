@@ -35,7 +35,6 @@ var SuikaGame = function () {
     useEffect(function () {
         if (isGameOver) {
             var bestScore_1 = localStorage.getItem('bestScore') || 0;
-            console.log(bestScore_1, score);
             if (score > Number(bestScore_1)) {
                 localStorage.setItem('bestScore', score.toString());
             }

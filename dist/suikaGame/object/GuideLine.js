@@ -6,5 +6,5 @@ export var GuideLine = Matter.Bodies.rectangle(getRenderWidth() / 2, getRenderHe
     isSensor: true,
     collisionFilter: { group: -1 },
     render: { fillStyle: GuideLineColor },
-    label: 'guideLine',
+    label: 'GUIDE_LINE'
 });

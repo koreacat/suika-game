@@ -7,12 +7,12 @@ export var GameOverLine = Matter.Bodies.rectangle(getRenderWidth() / 2, getRende
     isSensor: true,
     collisionFilter: { group: -1 },
     render: { fillStyle: '#ffffff00' },
-    label: 'gameOverLine',
+    label: 'GAME_OVER_LINE',
 });
 export var GameOverGuideLine = Matter.Bodies.rectangle(getRenderWidth() / 2, getRenderHeight() / 6.5, LINE_WIDTH, LINE_HEIGHT, {
     isStatic: true,
     isSensor: true,
     collisionFilter: { group: -1 },
     render: { fillStyle: '#ffffff20' },
-    label: 'guideLine',
+    label: 'GAME_OVER_GUIDE_LINE',
 });

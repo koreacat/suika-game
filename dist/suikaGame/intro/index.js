@@ -78,6 +78,6 @@ var Intro = function (_a) {
     }); };
     if (!isVisible)
         return null;
-    return (_jsxs("div", __assign({ className: cx('introArea') }, { children: [_jsx("ul", __assign({ className: cx('listWrap') }, { children: fruitItemEls })), _jsx("div", __assign({ className: cx('titleArea') }, { children: _jsx("button", __assign({ className: cx('btn'), onClick: onClick }, { children: "GAME START" })) })), _jsx("a", __assign({ href: 'https://github.com/koreacat/suika-game#readme', target: '_blank', className: cx('patchLink') }, { children: "\uD328\uCE58\uB178\uD2B8" }))] })));
+    return (_jsxs("div", __assign({ className: cx('introArea') }, { children: [_jsx("ul", __assign({ className: cx('listWrap') }, { children: fruitItemEls })), _jsx("div", __assign({ className: cx('titleArea') }, { children: _jsx("button", __assign({ className: cx('btn'), onClick: onClick }, { children: "GAME START" })) })), _jsx("a", __assign({ href: 'https://github.com/koreacat/suika-game#readme', target: '_blank', className: cx('patchLink') }, { children: "\uD328\uCE58\uB178\uD2B8" })), _jsx("span", __assign({ className: cx('version') }, { children: "v1.0.4" }))] })));
 };
 export default Intro;

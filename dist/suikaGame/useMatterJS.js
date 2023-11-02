@@ -23,7 +23,7 @@ var render = null;
 var requestAnimation = null;
 var lastTime = 0;
 var fixedItemTimeOut = null;
-var fixedItem = null; // 고정된 원
+var fixedItem = null; // 고정된 아이템
 var prevPosition = { x: getRenderWidth() / 2, y: 50 };
 var nextFruit = null;
 var prevMergingFruitIds = [];
@@ -43,7 +43,7 @@ var init = function (props) {
     engine.world.gravity.y = 2.0;
     render = Render.create({ element: canvasWrapEl, engine: engine, options: renderOptions });
     World.add(engine.world, __spreadArray([], Wall, true));
-    World.add(engine.world, [GameOverLine, GameOverGuideLine, GuideLine]);
+    World.add(engine.world, [GameOverGuideLine, GuideLine]);
     nextFruit = props.nextItem;
     createFixedItem(props);
 };
@@ -158,8 +158,8 @@ var event = function (props, effects) {
         World.add(engine.world, newItem);
         fixedItemTimeOut = setTimeout(function () {
             GuideLine.render.fillStyle = GuideLineColor;
-            createFixedItem(props);
             World.add(engine.world, GameOverLine);
+            createFixedItem(props);
         }, 750);
     });
     Matter.Events.on(engine, 'collisionStart', function (event) {
@@ -167,7 +167,7 @@ var event = function (props, effects) {
         pairs.forEach(function (pair) {
             var bodyA = pair.bodyA;
             var bodyB = pair.bodyB;
-            if (bodyA.label === 'gameOverLine' || bodyB.label === 'gameOverLine') {
+            if (bodyA.label === GameOverLine.label || bodyB.label === GameOverLine.label) {
                 handleGameOver(props);
                 return;
             }
